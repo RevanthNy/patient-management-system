@@ -2,23 +2,18 @@
 This document provides a comprehensive technical overview of the Patient Management backend service. It details the architectural design, database schema, API endpoints, and key business logic.
 
 ## Technology Stack
-This service is built using a Java based stack:
+This service is built using a Java-based stack:
 
+```
 Java: The core programming language.
-
 Spring Boot: The application framework, providing dependency injection, web services, and data access.
-
 Spring Data JPA (Hibernate): For object-relational mapping (ORM) to interact with the database.
-
 PostgreSQL: A powerful open-source relational database.
-
 Maven: For project build and dependency management.
-
 MapStruct: For high-performance, compile-time mapping between DTOs and entities.
-
 Liquibase: For version-controlled database schema migrations.
-
 Docker: For containerizing the application and its dependencies for consistent environments.
+```
 
 ## Architectural Design
 The service is built on a classic Layered Architecture to ensure a strong separation of concerns, making the application maintainable, scalable, and easy to test.
