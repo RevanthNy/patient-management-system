@@ -46,3 +46,7 @@ Database: patient_service
 
 ## How to Stop the Application
 To stop all the running services, go to your terminal window where the application is running and press ```Ctrl + C```.
+
+## Notes to Consider
+UI error messages might not be completely sensible, and the UI was created just for easy exposure to the service.
+Although the backend service logging and error handling with messages is correctly implemented according to the use cases
