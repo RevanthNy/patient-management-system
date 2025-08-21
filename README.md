@@ -43,7 +43,7 @@ Use the following credentials to log in:
 
 System: PostgreSQL
 
-Server: postgres-db
+Server: patient-db
 
 Username: admin
 
