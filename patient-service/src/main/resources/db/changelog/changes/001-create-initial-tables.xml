@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="1" author="your-name">
+        <comment>Create initial patient, address, and caregiver tables</comment>
+        
+        <createTable tableName="patients">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="phone_number" type="varchar(255)"/>
+            <column name="height_cm" type="double"/>
+            <column name="weight_kg" type="double"/>
+            <column name="date_of_birth" type="date"/>
+            <column name="ethnicity" type="varchar(255)"/>
+            <column name="type_of_diabetes" type="varchar(255)"/>
+            <column name="date_of_diagnosis" type="date"/>
+            <column name="biological_sex" type="varchar(255)"/>
+            <column name="notes" type="text"/>
+            <column name="assigned_physician" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="addresses">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="patient_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_address_patient" references="patients(id)"/>
+            </column>
+            <column name="mailing_address" type="varchar(255)"/>
+            <column name="zipcode" type="varchar(20)"/>
+            <column name="county" type="varchar(100)"/>
+            <column name="state" type="varchar(100)"/>
+            <column name="country" type="varchar(100)"/>
+        </createTable>
+
+        <createTable tableName="caregivers">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="patient_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_caregiver_patient" references="patients(id)"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="phone_number" type="varchar(255)"/>
+            <column name="relationship_to_patient" type="varchar(255)"/>
+        </createTable>
+        
+        <createTable tableName="patient_medical_history">
+            <column name="patient_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_history_patient" references="patients(id)"/>
+            </column>
+            <column name="condition_name" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="your-name">
+        <comment>Add indexes for patient search</comment>
+        <createIndex indexName="idx_patient_first_name" tableName="patients">
+            <column name="first_name"/>
+        </createIndex>
+        <createIndex indexName="idx_patient_last_name" tableName="patients">
+            <column name="last_name"/>
+        </createIndex>
+        <createIndex indexName="idx_patient_email" tableName="patients">
+            <column name="email"/>
+        </createIndex>
+        <createIndex indexName="idx_patient_phone_number" tableName="patients">
+            <column name="phone_number"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

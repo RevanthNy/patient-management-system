@@ -1,0 +1,25 @@
+# IDE and OS files
+.idea/
+.vscode/
+*.iml
+*.DS_Store
+.env
+.env*.local
+
+# Java / Maven build files
+/patient-service/target/
+/patient-service/pom.xml.tag
+/patient-service/pom.xml.releaseBackup
+/patient-service/pom.xml.versionsBackup
+/patient-service/pom.xml.next
+/patient-service/release.properties
+/patient-service/dependency-reduced-pom.xml
+/patient-service/build-log.txt
+/patient-service/hs_err_pid*
+
+# React / Node build files
+/patient-ui/node_modules/
+/patient-ui/dist/
+/patient-ui/npm-debug.log*
+/patient-ui/yarn-debug.log*
+/patient-ui/yarn-error.log*

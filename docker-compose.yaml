@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # 1. The PostgreSQL Database Service
+  postgres-db:
+    image: postgres:15
+    container_name: patient-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: patient_service
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # 2. The Backend Java/Spring Boot Service
+  patient-service-be:
+    container_name: patient-service-backend
+    build:
+      context: ./patient-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/patient_service
+    depends_on:
+      - postgres-db # Ensures the database starts before the backend
+    restart: on-failure
+
+  # 3. The Frontend React UI Service
+  patient-ui-fe:
+    container_name: patient-ui-frontend
+    build:
+      context: ./patient-ui
+    ports:
+      - "5173:80" # Connects your browser on port 5173 to the container's port 80
+    depends_on:
+      - patient-service-be # Ensures the backend starts before the frontend
+    restart: on-failure
+
+  # 4. Database GUI for data validation and management
+  adminer:
+    image: adminer
+    container_name: patient-db-gui
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres-db
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
