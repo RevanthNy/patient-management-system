@@ -4,17 +4,14 @@ This document provides a complete technical overview of the Patient Management f
 ## Technology Stack
 The user interface is a modern single-page application (SPA) built with a focus on performance, type safety, and a clean user experience.
 
+```
 React: The core library for building the component-based user interface.
-
 TypeScript: Adds static typing to JavaScript, catching errors early and improving code maintainability.
-
 Vite: A next-generation frontend tooling system that provides a fast development server and optimized builds.
-
 Material UI (MUI): A comprehensive library of pre-built, accessible, and customizable React components used for the entire form and layout.
-
 Axios: A promise-based HTTP client for making requests to the backend REST API.
-
 Lodash: A utility library providing helpful functions, specifically used here for a reliable isEqual deep comparison to detect form changes.
+```
 
 ## Architectural Design
 The frontend follows a Component-Based Architecture, a standard for modern React applications. This approach breaks the UI down into small, reusable, and independent pieces.
