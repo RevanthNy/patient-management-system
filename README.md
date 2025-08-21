@@ -9,6 +9,9 @@ Docker
 Docker Compose
 ```
 
+If docker is not installed. Follow the instructions here (https://docs.docker.com/compose/install/)
+
+
 No other software (like Java, Node.js, or PostgreSQL) is needed on your machine. Everything runs inside Docker containers.
 
 ## One-Command Setup
@@ -46,6 +49,17 @@ Database: patient_service
 
 ## How to Stop the Application
 To stop all the running services, go to your terminal window where the application is running and press ```Ctrl + C```.
+
+## Troubleshooting
+If you face an error starting the application/service after multiple runs and see liquibase errors in the server logs. Follow the steps below
+
+```
+docker-compose down 
+docker volume rm patient-management-system_postgres_data
+docker builder prune --all
+docker-compose up --build -d
+```
+
 
 ## Notes to Consider
 UI error messages might not be completely sensible, and the UI was created just for easy exposure to the service.

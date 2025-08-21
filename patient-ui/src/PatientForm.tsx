@@ -119,7 +119,7 @@ function PatientForm({ patient: editingPatient, onFormSubmit, onCancel }) {
           onFormSubmit({ type: 'error', text: error.response.data });
         } else if (typeof error.response.data === 'object' && error.response.data !== null) {
           setErrors(error.response.data);
-          onFormSubmit({ type: 'error', text: 'A record already exists with same details' });
+          onFormSubmit({ type: 'error', text: 'Validations failed, check the service for data validation errors' });
         } else {
           onFormSubmit({ type: 'error', text: 'An unexpected error occurred.' });
         }

@@ -2,6 +2,7 @@ package com.wlabs.patient_service.model.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class CaregiverDTO {
     private String email;
 
     @NotBlank(message = "Phone number is required.")
+    @Pattern(regexp = "^\\(?(\\d{3})\\)?[-.\\s]?(\\d{3})[-.\\s]?(\\d{4})$", message = "Invalid phone number format.")
     private String phoneNumber;
 
     @NotBlank(message = "Relationship to patient is required.")
