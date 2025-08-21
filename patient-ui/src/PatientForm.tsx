@@ -19,7 +19,7 @@ const initialPatientState = {
   weightKg: '', dateOfBirth: '', ethnicity: 'White', typeOfDiabetes: 'Type 1',
   dateOfDiagnosis: '', biologicalSex: 'Male', notes: '',
   assignedPhysician: 'Jane Doe',
-  medicalHistory: [],
+  medicalHistory: ['None'],
   address: { country: 'USA', zipcode: '', mailingAddress: '', state: 'CA', county: 'Orange County' },
   caregivers: []
 };
@@ -55,6 +55,25 @@ function PatientForm({ patient: editingPatient, onFormSubmit, onCancel }) {
     } else {
       setPatient(prev => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleHistoryChange = (event) => {
+    const { value } = event.target;
+    let newHistory = Array.isArray(value) ? value : [value];
+
+    if (newHistory.length > 1 && newHistory[newHistory.length - 1] === 'None') {
+      newHistory = ['None'];
+    } 
+  
+    else if (newHistory.length > 1 && newHistory.includes('None')) {
+      newHistory = newHistory.filter(item => item !== 'None');
+    }
+    
+    else if (newHistory.length === 0) {
+      newHistory = ['None'];
+    }
+
+    setPatient(prev => ({ ...prev, medicalHistory: newHistory }));
   };
 
   const handleCaregiverChange = (index, e) => {
@@ -131,7 +150,7 @@ function PatientForm({ patient: editingPatient, onFormSubmit, onCancel }) {
             <Grid item xs={12} sm={6} md={6}><FormControl component="fieldset"><FormLabel component="legend">Biological Sex</FormLabel><RadioGroup row name="biologicalSex" value={patient.biologicalSex} onChange={handleChange}><FormControlLabel value="Male" control={<Radio />} label="Male" /><FormControlLabel value="Female" control={<Radio />} label="Female" /><FormControlLabel value="Intersex" control={<Radio />} label="Intersex" /></RadioGroup></FormControl></Grid>
 
             <Grid item xs={12} sm={6} md={4}><FormControl fullWidth required><InputLabel>Assign to a Physician/Group</InputLabel><Select name="assignedPhysician" value={patient.assignedPhysician} label="Assign to a Physician/Group" onChange={handleChange}><MenuItem value="Jane Doe">Dr. Jane Doe</MenuItem><MenuItem value="John Smith">Dr. John Smith</MenuItem><MenuItem value="Emily Carter">Dr. Emily Carter</MenuItem></Select></FormControl></Grid>
-            <Grid item xs={12} sm={12} md={8}><FormControl fullWidth><InputLabel id="medical-history-label">Medical History</InputLabel><Select labelId="medical-history-label" multiple name="medicalHistory" value={patient.medicalHistory} onChange={handleChange} input={<OutlinedInput label="Medical History" />} renderValue={(selected) => selected.join(', ')}>{medicalConditions.map((c) => (<MenuItem key={c} value={c}>{c}</MenuItem>))}</Select></FormControl></Grid>
+            <Grid item xs={12} sm={12} md={8}><FormControl fullWidth required error={!!errors.medicalHistory}><InputLabel id="medical-history-label">Medical History</InputLabel><Select labelId="medical-history-label" multiple name="medicalHistory" value={patient.medicalHistory} onChange={handleHistoryChange} input={<OutlinedInput label="Medical History" />} renderValue={(selected) => selected.join(', ')}>{medicalConditions.map((c) => (<MenuItem key={c} value={c}>{c}</MenuItem>))}</Select></FormControl></Grid>
 
             <Grid item xs={12}><TextField fullWidth multiline rows={2} label="Notes" name="notes" value={patient.notes} onChange={handleChange} /></Grid>
 
@@ -150,7 +169,7 @@ function PatientForm({ patient: editingPatient, onFormSubmit, onCancel }) {
         </Grid>
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
           <Button type="submit" variant="contained" color="primary" size="large">{isEditMode ? 'Update Patient' : 'Submit Patient'}</Button>
-          <Button variant="outlined" size="large" onClick={onCancel}>Cancel</Button>
+          <Button variant="outlined" size="large" onClick={() => onCancel()}>Cancel</Button>
         </Box>
       </form>
     </Paper>

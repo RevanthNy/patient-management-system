@@ -19,6 +19,7 @@
 
 # React / Node build files
 /patient-ui/node_modules/
+/patient-ui/package-lock.json
 /patient-ui/dist/
 /patient-ui/npm-debug.log*
 /patient-ui/yarn-debug.log*
